@@ -1,26 +1,46 @@
-# Slim Framework 3 Skeleton Application
+# Modus Create PHP API Development Assignment
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
-
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+This is a simple application developed with Slim Framework 3 Skeleton.
+This application is an API that is to be used the [NHTSA NCAP 5 Star Safety Ratings API](https://one.nhtsa.gov/webapi/Default.aspx?SafetyRatings/API/5). 
 
 ## Install the Application
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+Requirements:
+You MUST be installed on your environment the follow :
+- Git
+- Composer
+- PHP 7.0
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+Run this command from the directory in which you want to install your the application.
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+    git clone https://github.com/eduardobcolombo/ModusCreate.git backendAPI
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
+Replace `[backendAPI]` with the desired directory name for your new application. You'll want to:
+
+You MUST need to run the below command to install the libraries
+
+    composer install
 
 To run the application in development, you can also run this command. 
 
-	php composer.phar start
+	composer start
+	
+Or 
 
+    php -S 0.0.0.0:8080 -t public public/index.php
+    
+    
 Run this command to run the test suite
 
-	php composer.phar test
+	composer test
+	
+Or 
 
-That's it! Now go build something cool.
+     vendor/phpunit/phpunit/phpunit
+    
+    
+For deploy you can use any webserver, running the PHP 7.0 or later.
+This application does not use any database or environment configurations.
+
+If you discover a security vulnerability within this application, 
+please send an e-mail to Eduardo de Brito Colombo at eduardobcolombo at gmail dot com.
