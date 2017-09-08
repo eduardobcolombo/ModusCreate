@@ -2,14 +2,25 @@
 // Routes
 
 
-// Endpoint http://localhost:8080/vehicles/<MODEL YEAR>/<MANUFACTURER>/<MODEL>
-$app->get('/vehicles[/{params:.*}]', function ($request, $response, $args) {
+// Endpoint GET  http://localhost:8080/vehicles/<MODEL YEAR>/<MANUFACTURER>/<MODEL>
+// Endpoing POST http://localhost:8080/vehicles
+$app->map(['GET', 'POST'], '/vehicles[/{params:.*}]', function ($request, $response, $args) {
 
     // Getting parameters of query
     $params = explode('/', $request->getAttribute('params'));
     $modelYear = $params[0];
     $manufacturer = $params[1];
     $model = $params[2];
+    $count = 0;
+
+    // Checking if the method is post and reading the json data
+    if ($request->isPost()) {
+        $data = json_decode($request->getBody(), true);
+        $modelYear = $data['modelYear'];
+        $manufacturer = $data['manufacturer'];
+        $model = $data['model'];
+//        return $response->withJson($data);
+    }
 
     // Reading NHTSA API to get information
     $client = new \GuzzleHttp\Client();
@@ -19,7 +30,7 @@ $app->get('/vehicles[/{params:.*}]', function ($request, $response, $args) {
     );
     // Reading the result and creating response
     $body = json_decode($res->getBody());
-    $count = $body->Count;
+    $count = ($body->Count >  0) ? $body->Count : 0;
     $results = [];
     if ($count>0) {
         foreach($body->Results as $vehicle) {
