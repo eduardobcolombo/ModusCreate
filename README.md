@@ -9,7 +9,7 @@ Requirements:
 You MUST be installed on your environment the follow :
 - Git
 - Composer
-- PHP 7.0
+- PHP 7.0 or later
 
 Run this command from the directory in which you want to install your the application.
 
