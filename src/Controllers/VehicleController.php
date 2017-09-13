@@ -131,7 +131,7 @@ class VehicleController implements VehiclesInterface
         $this->model = filter_var($request->getAttribute('model'), FILTER_SANITIZE_STRING) ?? null;
 
         // Checking if withRating parameter is true and setting $withRating
-        $this->withRating = ($request->getQueryParam('withRating') == 'true') ? true : false;
+        $this->withRating = (filter_var($request->getQueryParam('withRating'), FILTER_SANITIZE_STRING) == 'true') ? true : false;
 
         // Checking if the method is post and reading the json data
         if ($request->isPost() === true) {
