@@ -125,14 +125,6 @@ class VehicleController implements VehiclesInterface
      */
     private function setValues(Request $request)
     {
-        // If GET parameters exists set on variables
-        $this->modelYear = filter_var($request->getAttribute('modelYear'), FILTER_SANITIZE_NUMBER_INT) ?? null;
-        $this->manufacturer = filter_var($request->getAttribute('manufacturer'), FILTER_SANITIZE_STRING) ?? null;
-        $this->model = filter_var($request->getAttribute('model'), FILTER_SANITIZE_STRING) ?? null;
-
-        // Checking if withRating parameter is true and setting $withRating
-        $this->withRating = (filter_var($request->getQueryParam('withRating'), FILTER_SANITIZE_STRING) == 'true') ? true : false;
-
         // Checking if the method is post and reading the json data
         if ($request->isPost() === true) {
             $data = json_decode((string)$request->getBody(), true);
@@ -140,8 +132,16 @@ class VehicleController implements VehiclesInterface
             $this->modelYear = filter_var($data['modelYear'], FILTER_SANITIZE_NUMBER_INT) ?? null;
             $this->manufacturer = filter_var($data['manufacturer'], FILTER_SANITIZE_STRING) ??  null;
             $this->model = filter_var($data['model'], FILTER_SANITIZE_STRING) ??  null;
-        }        
-    }
+        } else {
+            // If GET parameters exists set on variables
+            $this->modelYear = filter_var($request->getAttribute('modelYear'), FILTER_SANITIZE_NUMBER_INT) ?? null;
+            $this->manufacturer = filter_var($request->getAttribute('manufacturer'), FILTER_SANITIZE_STRING) ?? null;
+            $this->model = filter_var($request->getAttribute('model'), FILTER_SANITIZE_STRING) ?? null;
+
+            // Checking if withRating parameter is true and setting $withRating
+            $this->withRating = (filter_var($request->getQueryParam('withRating'), FILTER_SANITIZE_STRING) === 'true') ? true : false;
+        }
+       }
     /**
      * Read all vehicles data and set $this->results variable
      * @param $body
