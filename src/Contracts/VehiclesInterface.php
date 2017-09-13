@@ -21,11 +21,5 @@ interface VehiclesInterface
      * @return Response
      */
     public function find(Request $request, Response $response, $args);
-    
-    /**
-     * Validate the request data
-     * @return boll
-     */
-    private function validate();
 
 }
