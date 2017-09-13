@@ -126,9 +126,9 @@ class VehicleController implements VehiclesInterface
     private function setValues(Request $request)
     {
         // If GET parameters exists set on variables
-        $this->modelYear = $request->getAttribute('modelYear') ?? null;
-        $this->manufacturer = $request->getAttribute('manufacturer') ?? null;
-        $this->model = $request->getAttribute('model') ?? null;
+        $this->modelYear = filter_var($request->getAttribute('modelYear'), FILTER_SANITIZE_NUMBER_INT) ?? null;
+        $this->manufacturer = filter_var($request->getAttribute('manufacturer'), FILTER_SANITIZE_STRING) ?? null;
+        $this->model = filter_var($request->getAttribute('model'), FILTER_SANITIZE_STRING) ?? null;
 
         // Checking if withRating parameter is true and setting $withRating
         $this->withRating = ($request->getQueryParam('withRating') == 'true') ? true : false;
@@ -137,9 +137,9 @@ class VehicleController implements VehiclesInterface
         if ($request->isPost() === true) {
             $data = json_decode((string)$request->getBody(), true);
             // If POST parameters exists set on variables
-            $this->modelYear = $data['modelYear'] ?? null;
-            $this->manufacturer = $data['manufacturer'] ??  null;
-            $this->model = $data['model'] ??  null;
+            $this->modelYear = filter_var($data['modelYear'], FILTER_SANITIZE_NUMBER_INT) ?? null;
+            $this->manufacturer = filter_var($data['manufacturer'], FILTER_SANITIZE_STRING) ??  null;
+            $this->model = filter_var($data['model'], FILTER_SANITIZE_STRING) ??  null;
         }        
     }
     /**
@@ -174,8 +174,8 @@ class VehicleController implements VehiclesInterface
     private function validate(): bool
     {
         // Checking if modelYear param is valid
-        if (is_numeric($this->modelYear) === true)  return true;
+        if (is_numeric($this->modelYear) === false)  return false;
 
-        return false;
+        return true;
     }
 }
